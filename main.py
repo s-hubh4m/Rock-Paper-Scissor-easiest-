@@ -78,7 +78,7 @@ def handle_button_click(pos):
 def display_result(result):
     pg.display.set_caption("Result")
     result_text = font.render(result, True, black)
-    result_rect = result_text.get_rect(center=(200, 225))
+    result_rect = result_text.get_rect(center=(200, 300))
     screen.blit(result_text, result_rect)
     pg.display.flip()
     pg.time.delay(2000)  # Display result for 2 seconds
@@ -87,7 +87,7 @@ def display_result(result):
 
 def display_computer_choice(computer_choice):
     info_text = font.render("Computer chose", True, black)
-    info_rect = info_text.get_rect(center=(200, 25))
+    info_rect = info_text.get_rect(center=(200, 100))
     screen.blit(info_text, info_rect)
 
     # Choose the appropriate image based on the computer's choice
@@ -101,7 +101,7 @@ def display_computer_choice(computer_choice):
         return  # Invalid choice
 
     # Display the computer's choice image below the text
-    computer_rect = computer_image.get_rect(center=(200, 90))
+    computer_rect = computer_image.get_rect(center=(200, 180))
     screen.blit(computer_image, computer_rect)
 
 
@@ -116,7 +116,22 @@ def display_computer_choice(computer_choice):
         return  # Invalid choice
 
     # Display the computer's choice image
+score=0
+def keep_scores():
+    score_text = font.render(f"Score: {score}", True, black)
+    score_rect = score_text.get_rect(center=(200, 25))
+    screen.blit(score_text, score_rect)
 
+def keep_scores():
+    # Draw a box around the score
+    box_rect = pg.Rect(140, 10, 120, 50)
+    pg.draw.rect(screen, button_colour, box_rect)
+    pg.draw.rect(screen, black, box_rect, 2)
+
+    # Render and display the score text
+    score_text = font.render(f"Score: {score}", True, black)
+    score_rect = score_text.get_rect(center=(200, 35))
+    screen.blit(score_text, score_rect)
 
 pg.display.update()
 
@@ -155,10 +170,12 @@ while running:
                 if (user_choice == "rock" and computer == "scissor") or (user_choice == "paper" and computer == "rock") or (
                         user_choice == "scissor" and computer == "paper"):
                     result = "YOU WON!"
+                    score=score+1
                 elif user_choice == computer:
                     result = "IT'S A TIE!"
                 else:
                     result = "YOU LOST!"
+                    score=score-1
 
                 # Display the result
                 display_result(result)
@@ -178,6 +195,7 @@ while running:
 
         # Draw game buttons
         draw_game_buttons()
+        keep_scores()
 
     # Update the display
     pg.display.flip()
